@@ -32,6 +32,26 @@ $ajaxUtils.sendGetRequest(
 });
 // *** finish **
 
+// *** start ***
+// On first load, show home view
+showLoading("#main-content");
+$ajaxUtils.sendGetRequest(
+  allCategoriesUrl, 
+  buildAndShowHomeHTML, // ***** <---- TODO: STEP 1: Substitute [...] ******
+  true); // Explicitely setting the flag to get JSON from server processed into an object literal
+});
+// *** finish **
+
+// *** start ***
+showLoading("#main-content");
+$ajaxUtils.sendGetRequest(
+  allCategoriesUrl,
+  function(buildAndShowCategoriesHTML) { document.querySelector("#main-content").innerHTML = responseText;
+                                                                                                                 },  // ***** <---- TODO: STEP 1: Substitute [...] ******
+  true); // Explicitely setting the flag to get JSON from server processed into an object literal
+});
+// *** finish **
+
 
 // Builds HTML for the home page based on categories array
 // returned from the server.
@@ -60,11 +80,11 @@ function buildAndShowHomeHTML (categories) {
       // it into the home html snippet.
       //
       // var homeHtmlToInsertIntoMainPage = ....
-        var homeHtmlToInsertIntoMainPage =
-          buildCategoriesViewHtml(chosenCategoryShortName,
-                                  homeHtmlUrl
-                                  homeHtml);
-
+      //  var homeHtmlToInsertIntoMainPage =
+      //    buildCategoriesViewHtml(chosenCategoryShortName,
+      //                            homeHtmlUrl
+      //                            homeHtml);
+        var homeHtmlToInsertIntoMainPage = insertProperty(homeHtml, "randomCategoryShortName", "'" + chosenCategoryShortName.short_name + "'");
       // TODO: STEP 4: Insert the the produced HTML in STEP 3 into the main page
       // Use the existing insertHtml function for that purpose. Look through this code for an example
       // of how to do that.
